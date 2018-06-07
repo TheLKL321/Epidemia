@@ -24,6 +24,5 @@ public class Symulacja {
             String[] values = e.getMessage().split(":", 2);
             System.out.println("Niedozwolona wartość " + values[1] + " dla klucza " + values[0]);
         }
-
     }
 }
