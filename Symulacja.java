@@ -23,7 +23,7 @@ public class Symulacja {
         } catch (ConfigurationException e){
             // musi być InvalidValueException
             String[] values = e.getMessage().split(":", 2);
-            System.out.println("Niedozwolona wartość " + values[1] + " dla klucza " + values[0]);
+            System.out.println("Niedozwolona wartość \"" + values[1] + "\" dla klucza " + values[0]);
         }
     }
 }

@@ -13,31 +13,9 @@ import java.util.*;
 // Służy do czytania danych z wymaganych plików i stworzenia instancji World na ich podstawie
 public class Parser {
 
-    // Czyta pliki simulation-conf i default i tworzy świat
+    // Czyta pliki konfiguracyjne, sprawdza ich poprawność i tworzy świat
     public static void parse() throws ConfigurationException {
-        Properties defaultProperties = new Properties();
-        String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
-        String defaultPath = rootPath + "default.properties";
-        String configPath = rootPath + "simulation-conf.xml";
-
-        try (FileInputStream stream = new FileInputStream(defaultPath);
-             Reader reader = Channels.newReader(stream.getChannel(), StandardCharsets.UTF_8.name())) {
-            defaultProperties.load(reader);
-        } catch (MalformedInputException e) {
-            throw new InvalidDefaultPropertiesException();
-        } catch (IOException e) {
-            throw new NoDefaultPropertiesException();
-        }
-
-        Properties config = new Properties(defaultProperties);
-
-        try (FileInputStream stream = new FileInputStream(configPath)){
-            config.loadFromXML(stream);
-        } catch (InvalidValueException e) {
-            throw new InvalidConfigFileException();
-        } catch (IOException e) {
-            throw new NoConfigFileException();
-        }
+        Properties config = readConfig();
 
         if (config.size() < 11) {
             String[] keys = {"seed", "liczbaAgentów", "liczbaDni", "śrZnajomych", "prawdTowarzyski", "prawdSpotkania",
@@ -137,5 +115,34 @@ public class Parser {
         reporter.noteInitialNet(net);
 
         World.create(random, meetingProb, infectiousness, recoverability, mortality, reporter, net, duration);
+    }
+
+    // Czyta wartości z plików konfiguracyjnych
+    private static Properties readConfig() throws ConfigurationException{
+        Properties defaultProperties = new Properties();
+        String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
+        String defaultPath = rootPath + "default.properties";
+        String configPath = rootPath + "simulation-conf.xml";
+
+        try (FileInputStream stream = new FileInputStream(defaultPath);
+             Reader reader = Channels.newReader(stream.getChannel(), StandardCharsets.UTF_8.name())) {
+            defaultProperties.load(reader);
+        } catch (MalformedInputException e) {
+            throw new InvalidDefaultPropertiesException();
+        } catch (IOException e) {
+            throw new NoDefaultPropertiesException();
+        }
+
+        Properties config = new Properties(defaultProperties);
+
+        try (FileInputStream stream = new FileInputStream(configPath)){
+            config.loadFromXML(stream);
+        } catch (InvalidPropertiesFormatException e) {
+            throw new InvalidConfigFileException();
+        } catch (IOException e) {
+            throw new NoConfigFileException();
+        }
+
+        return config;
     }
 }
