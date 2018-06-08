@@ -14,19 +14,13 @@ public class Creator {
     public static LinkedHashMap<Agent, HashSet<Agent>> createNet(Random random, int population, int averageFriends, double percentageSocial){
         LinkedHashMap<Agent, HashSet<Agent>> result = new LinkedHashMap<>();
 
-        Agent patientZero;
-        if (random.nextDouble() < percentageSocial)
-            patientZero = new SocialAgent(true, 1);
-        else
-            patientZero = new NormalAgent(true, 1);
-        result.put(patientZero, new HashSet<>());
-
-        for (int i = 1; i < population; i++) {
+        int patientZero = random.nextInt(population) + 1;
+        for (int i = 1; i <= population; i++) {
             Agent tempAgent;
             if (random.nextDouble() < percentageSocial)
-                tempAgent = new SocialAgent(false, i + 1);
+                tempAgent = new SocialAgent(i == patientZero, i);
             else
-                tempAgent = new NormalAgent(false, i + 1);
+                tempAgent = new NormalAgent(i == patientZero, i);
             result.put(tempAgent, new HashSet<>());
         }
 
