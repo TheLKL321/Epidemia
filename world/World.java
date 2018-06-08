@@ -19,10 +19,10 @@ public class World {
         // never instanciate
     }
 
-    public static void create(long seed, double meetingProb, double infectiousness, double recoverability, double mortality, Reporter reporter, Map<Agent, HashSet<Agent>> net, int duration){
+    public static void create(Random random, double meetingProb, double infectiousness, double recoverability, double mortality, Reporter reporter, Map<Agent, HashSet<Agent>> net, int duration){
         if (instance == null) {
             instance = new World();
-            instance.random = new Random(seed);
+            instance.random = random;
             instance.meetingProb = meetingProb;
             instance.infectiousness = infectiousness;
             instance.recoverability = recoverability;
@@ -48,10 +48,16 @@ public class World {
     }
 
     public void revolve(){
+        currentDay++;
 
+        Set<Agent> naughtyList = new HashSet<>();
         for (Agent agent : net.keySet()) {
             if (random.nextDouble() < mortality)
-                killAgent(agent);
+                naughtyList.add(agent);
+        }
+
+        for (Agent agent : naughtyList) {
+            killAgent(agent);
         }
 
         for (Agent agent : net.keySet()){
@@ -62,7 +68,7 @@ public class World {
         for (Agent agent : net.keySet())
             agent.keepMeeting();
 
-        for (Meeting meeting : timeline.get(currentDay))
+        for (Meeting meeting : timeline.get(currentDay - 1))
             meeting.conductMeeting();
     }
 
@@ -74,10 +80,13 @@ public class World {
             friends.remove(agent);
 
         for (LinkedList<Meeting> meetings : timeline.subList(currentDay, timeline.size())) {
-            //TODO: is removing from meetings while iterating over it safe?
+            Set<Meeting> cancelled = new HashSet<>();
             for (Meeting meeting : meetings) {
                 if (meeting.contains(agent))
-                    meetings.remove(meeting);
+                    cancelled.add(meeting);
+            }
+            for (Meeting meeting : cancelled) {
+                meetings.remove(meeting);
             }
         }
     }

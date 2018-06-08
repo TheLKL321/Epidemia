@@ -1,18 +1,18 @@
 package assistants;
 
-import world.World;
 import agent.Agent;
 import agent.NormalAgent;
 import agent.SocialAgent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class Creator {
 
-    public static LinkedHashMap<Agent, HashSet<Agent>> createNet(long seed, int population, int averageFriends, double percentageSocial){
+    public static LinkedHashMap<Agent, HashSet<Agent>> createNet(Random random, int population, int averageFriends, double percentageSocial){
         LinkedHashMap<Agent, HashSet<Agent>> result = new LinkedHashMap<>();
-
-        Random random = new Random(seed);
 
         Agent patientZero;
         if (random.nextDouble() < percentageSocial)
@@ -30,11 +30,10 @@ public class Creator {
             result.put(tempAgent, new HashSet<>());
         }
 
-        return rollFriendships(result, population, averageFriends);
+        return rollFriendships(random, result, population, averageFriends);
     }
 
-    private static LinkedHashMap<Agent, HashSet<Agent>> rollFriendships(LinkedHashMap<Agent, HashSet<Agent>> result, int population, int averageFriends){
-        Random random = World.getInstance().getRandom();
+    private static LinkedHashMap<Agent, HashSet<Agent>> rollFriendships(Random random, LinkedHashMap<Agent, HashSet<Agent>> result, int population, int averageFriends){
         int totalFriendships = (averageFriends * population)/2;
         ArrayList<Agent> agentList = new ArrayList<>(result.keySet());
 

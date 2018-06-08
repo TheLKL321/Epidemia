@@ -20,7 +20,7 @@ public class Reporter {
         noteInitialState(config);
         this.currentHealthy = Integer.parseInt(config.getProperty("liczbaAgentów")) - 1;
         this.currentInfected = 1;
-        this.currentHealthy = 0;
+        this.currentImmune = 0;
     }
 
     public void reportInfection(){

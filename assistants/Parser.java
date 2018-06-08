@@ -8,10 +8,7 @@ import java.io.*;
 import java.nio.channels.Channels;
 import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 public class Parser {
 
@@ -131,11 +128,12 @@ public class Parser {
             throw new InvalidValueException("plikZRaportem:" + reportPath);
         }
 
-        LinkedHashMap<Agent, HashSet<Agent>> net = Creator.createNet(seed, population, averageFriends, percentageSocial);
+        Random random = new Random(seed);
+        LinkedHashMap<Agent, HashSet<Agent>> net = Creator.createNet(random, population, averageFriends, percentageSocial);
         Reporter reporter = new Reporter(reportPath, config);
         reporter.noteInitialAgentInfo(net.keySet());
         reporter.noteInitialNet(net);
 
-        World.create(seed, meetingProb, infectiousness, recoverability, mortality, reporter, net, duration);
+        World.create(random, meetingProb, infectiousness, recoverability, mortality, reporter, net, duration);
     }
 }
