@@ -40,6 +40,7 @@ public class World {
     }
 
     public void start(){
+        reporter.noteDayHeadline();
         while (currentDay <= duration) {
             revolve();
             reporter.noteDay();

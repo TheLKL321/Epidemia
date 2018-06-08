@@ -27,7 +27,8 @@ public abstract class Agent {
 
     public void becomeInfected(){
         this.ifInfected = !ifImmune;
-        World.getInstance().getReporter().reportInfection();
+        if (ifInfected())
+            World.getInstance().getReporter().reportInfection();
     }
 
     public void pullThrough(){
