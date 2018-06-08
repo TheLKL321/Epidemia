@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+// Służy do przetrzymywania notatek na temat stanu symulacji i wypisywania do pliku pełnego raportu
 public class Reporter {
     private StringBuilder sb = new StringBuilder();
     private int currentHealthy, currentInfected, currentImmune;

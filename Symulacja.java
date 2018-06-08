@@ -5,6 +5,7 @@ import world.World;
 public class Symulacja {
 
     public static void main(String[] args) {
+
         try {
             Parser.parse();
             World.getInstance().start();
@@ -20,7 +21,7 @@ public class Symulacja {
         } catch (NoValueException e){
             System.out.println("Brak wartości dla klucza " + e.getMessage());
         } catch (ConfigurationException e){
-            // must be InvalidValueException
+            // musi być InvalidValueException
             String[] values = e.getMessage().split(":", 2);
             System.out.println("Niedozwolona wartość " + values[1] + " dla klucza " + values[0]);
         }

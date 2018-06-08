@@ -6,6 +6,7 @@ import assistants.Reporter;
 
 import java.util.*;
 
+// świat symulacji - trzyma dane dotyczące choroby, agentów, spotkań i przeprowadza kolejne dni symulacji
 public class World {
     private static World instance = null;
     private Random random;
@@ -15,7 +16,7 @@ public class World {
     private Map<Agent, HashSet<Agent>> net;
     private ArrayList<LinkedList<Meeting>> timeline = new ArrayList<>();
 
-    public World(){
+    private World(){
         // służy do zapobiegania powstawaniu instancji
     }
 

@@ -10,8 +10,10 @@ import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+// Służy do czytania danych z wymaganych plików i stworzenia instancji World na ich podstawie
 public class Parser {
 
+    // Czyta pliki simulation-conf i default i tworzy świat
     public static void parse() throws ConfigurationException {
         Properties defaultProperties = new Properties();
         String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();

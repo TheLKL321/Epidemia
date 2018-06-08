@@ -7,11 +7,12 @@ import java.util.Random;
 public class Meeting {
     private Agent agent1, agent2;
 
-    public Meeting(Agent agent1, Agent agent2) {
+    Meeting(Agent agent1, Agent agent2) {
         this.agent1 = agent1;
         this.agent2 = agent2;
     }
 
+    // Przeprowadza spotkanie i zaraża uczestników (losuje)
     public void conductMeeting(){
         Random random = World.getInstance().getRandom();
         double infectiousness = World.getInstance().getInfectiousness();

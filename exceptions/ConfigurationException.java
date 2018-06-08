@@ -2,12 +2,13 @@ package exceptions;
 
 import java.io.IOException;
 
+// Potomkowie tej klasy służą do zgłaszania odpowiednich wyjątków podczas czytania danych z plików
 public class ConfigurationException extends IOException {
-    public ConfigurationException(String message) {
+    ConfigurationException(String message) {
         super(message);
     }
 
-    public ConfigurationException(){
+    ConfigurationException(){
 
     }
 }

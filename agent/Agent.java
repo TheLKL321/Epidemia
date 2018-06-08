@@ -10,14 +10,16 @@ public abstract class Agent {
     private boolean ifInfected, ifImmune;
     private int id;
 
-    protected Agent(boolean ifInfected, int id) {
+    Agent(boolean ifInfected, int id) {
         this.ifInfected = ifInfected;
         this.id = id;
     }
 
+    // losuje chęci spotkania i umawia się na spotkania dopóki nie wylosuje że nie chce się spotykać
     public abstract void keepMeeting();
 
-    protected void arrangeMeeting(HashSet<Agent> friendList){
+    // losuje znajomego z listy i umawia się z nim na spotkanie
+    void arrangeMeeting(HashSet<Agent> friendList){
         Random random = World.getInstance().getRandom();
         int currentDay = World.getInstance().getCurrentDay(), duration = World.getInstance().getDuration();
 
@@ -25,7 +27,8 @@ public abstract class Agent {
                 random.nextInt(duration - currentDay + 1) + currentDay - 1);
     }
 
-    public void becomeInfected(){
+    // jeśli Agent nie jest odporny, to zostaje zarażony
+    void becomeInfected(){
         this.ifInfected = !ifImmune;
         if (ifInfected())
             World.getInstance().getReporter().reportInfection();
@@ -41,7 +44,7 @@ public abstract class Agent {
         return ifInfected;
     }
 
-    public HashSet<Agent> getFriendList(){
+    HashSet<Agent> getFriendList(){
         return World.getInstance().getNet().get(this);
     }
 

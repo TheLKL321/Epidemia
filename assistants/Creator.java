@@ -9,9 +9,11 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
-public class Creator {
+// Służy do losowania grafu znajomości
+class Creator {
 
-    public static LinkedHashMap<Agent, HashSet<Agent>> createNet(Random random, int population, int averageFriends, double percentageSocial){
+    // Tworzy i zwraca losowy graf znajomości według podanych zmiennych
+    static LinkedHashMap<Agent, HashSet<Agent>> createNet(Random random, int population, int averageFriends, double percentageSocial){
         LinkedHashMap<Agent, HashSet<Agent>> result = new LinkedHashMap<>();
 
         int patientZero = random.nextInt(population) + 1;
@@ -27,6 +29,7 @@ public class Creator {
         return rollFriendships(random, result, population, averageFriends);
     }
 
+    // Losuje znajomości (krawędzie) w podanym grafie
     private static LinkedHashMap<Agent, HashSet<Agent>> rollFriendships(Random random, LinkedHashMap<Agent, HashSet<Agent>> result, int population, int averageFriends){
         int totalFriendships = (averageFriends * population)/2;
         ArrayList<Agent> agentList = new ArrayList<>(result.keySet());
