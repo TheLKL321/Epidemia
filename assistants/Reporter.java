@@ -47,12 +47,8 @@ public class Reporter {
 
     public void noteInitialAgentInfo(Set<Agent> agents){
         sb.append("# agenci jako: id typ lub id* typ dla chorego\n");
-        for (Agent agent : agents) {
-            sb.append(agent.getId());
-            if (agent.ifInfected())
-                sb.append("*");
-            sb.append(" ").append(agent).append("\n");
-        }
+        for (Agent agent : agents)
+            sb.append(agent).append("\n");
         sb.append("\n");
     }
 

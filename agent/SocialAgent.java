@@ -26,6 +26,9 @@ public class SocialAgent extends Agent {
 
     @Override
     public String toString() {
-        return "towarzyski";
+        String result = String.valueOf(getId());
+        if (ifInfected())
+            result += "*";
+        return result + " towarzyski";
     }
 }

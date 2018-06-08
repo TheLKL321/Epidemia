@@ -20,6 +20,9 @@ public class NormalAgent extends Agent {
 
     @Override
     public String toString() {
-        return "zwykły";
+        String result = String.valueOf(getId());
+        if (ifInfected())
+            result += "*";
+        return result + " zwykły";
     }
 }

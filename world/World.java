@@ -52,7 +52,7 @@ public class World {
 
         Set<Agent> naughtyList = new HashSet<>();
         for (Agent agent : net.keySet()) {
-            if (random.nextDouble() < mortality)
+            if (agent.ifInfected() && random.nextDouble() < mortality)
                 naughtyList.add(agent);
         }
 
@@ -61,7 +61,7 @@ public class World {
         }
 
         for (Agent agent : net.keySet()){
-            if (random.nextDouble() < recoverability)
+            if (agent.ifInfected() && random.nextDouble() < recoverability)
                 agent.pullThrough();
         }
 
