@@ -14,7 +14,6 @@ public class SocialAgent extends Agent {
     @Override
     public void keepMeeting() {
         Random random = World.getInstance().getRandom();
-
         HashSet<Agent> friendsList = new HashSet<>(getFriendList());
 
         for (Agent agent : getFriendList())

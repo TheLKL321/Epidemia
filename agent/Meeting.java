@@ -15,6 +15,7 @@ public class Meeting {
     public void conductMeeting(){
         Random random = World.getInstance().getRandom();
         double infectiousness = World.getInstance().getInfectiousness();
+
         if (agent1.ifInfected()){
             if (!agent2.ifInfected()){
                 if (random.nextDouble() < infectiousness)

@@ -20,6 +20,7 @@ public abstract class Agent {
     protected void arrangeMeeting(HashSet<Agent> friendList){
         Random random = World.getInstance().getRandom();
         int currentDay = World.getInstance().getCurrentDay(), duration = World.getInstance().getDuration();
+
         World.getInstance().addMeeting(new Meeting(this, (new ArrayList<>(friendList)).get(random.nextInt(friendList.size()))),
                 random.nextInt(duration - currentDay + 1) + currentDay - 1);
     }

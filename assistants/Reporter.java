@@ -15,12 +15,12 @@ public class Reporter {
     private int currentHealthy, currentInfected, currentImmune;
     private String reportPath;
 
-    public Reporter(String reportPath, Properties config) {
+    Reporter(String reportPath, Properties config) {
         this.reportPath = reportPath;
-        noteInitialState(config);
         this.currentHealthy = Integer.parseInt(config.getProperty("liczbaAgentów")) - 1;
         this.currentInfected = 1;
         this.currentImmune = 0;
+        noteInitialState(config);
     }
 
     public void reportInfection(){
@@ -39,26 +39,24 @@ public class Reporter {
 
     private void noteInitialState(Properties config){
         sb.append("# twoje wyniki powinny zawierać te komentarze\n");
-        for (String token : config.stringPropertyNames()) {
+        for (String token : config.stringPropertyNames())
             sb.append(token).append("=").append(config.getProperty(token)).append("\n");
-        }
         sb.append("\n");
     }
 
-    public void noteInitialAgentInfo(Set<Agent> agents){
+    void noteInitialAgentInfo(Set<Agent> agents){
         sb.append("# agenci jako: id typ lub id* typ dla chorego\n");
         for (Agent agent : agents)
             sb.append(agent).append("\n");
         sb.append("\n");
     }
 
-    public void noteInitialNet(HashMap<Agent, HashSet<Agent>> net){
+    void noteInitialNet(HashMap<Agent, HashSet<Agent>> net){
         sb.append("# graf\n");
         for (Agent agent : net.keySet()) {
             sb.append(agent.getId()).append(" ");
-            for (Agent friend : net.get(agent)) {
+            for (Agent friend : net.get(agent))
                 sb.append(friend.getId()).append(" ");
-            }
             sb.append("\n");
         }
         sb.append("\n");

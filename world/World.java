@@ -16,7 +16,7 @@ public class World {
     private ArrayList<LinkedList<Meeting>> timeline = new ArrayList<>();
 
     public World(){
-        // never instanciate
+        // służy do zapobiegania powstawaniu instancji
     }
 
     public static void create(Random random, double meetingProb, double infectiousness, double recoverability, double mortality, Reporter reporter, Map<Agent, HashSet<Agent>> net, int duration){
@@ -29,9 +29,9 @@ public class World {
             instance.mortality = mortality;
             instance.reporter = reporter;
             instance.net = net;
+            instance.duration = duration;
             for (int i = 0; i < duration; i++)
                 instance.timeline.add(new LinkedList<>());
-            instance.duration = duration;
         }
     }
 
@@ -47,10 +47,20 @@ public class World {
         }
     }
 
-    public void revolve(){
-        currentDay++;
+    private void revolve(){
+        cullTheWeak();
+        saveTheStrong();
 
+        for (Agent agent : net.keySet())
+            agent.keepMeeting();
+
+        for (Meeting meeting : timeline.get(currentDay - 1))
+            meeting.conductMeeting();
+    }
+
+    private void cullTheWeak(){
         Set<Agent> naughtyList = new HashSet<>();
+
         for (Agent agent : net.keySet()) {
             if (agent.ifInfected() && random.nextDouble() < mortality)
                 naughtyList.add(agent);
@@ -59,17 +69,6 @@ public class World {
         for (Agent agent : naughtyList) {
             killAgent(agent);
         }
-
-        for (Agent agent : net.keySet()){
-            if (agent.ifInfected() && random.nextDouble() < recoverability)
-                agent.pullThrough();
-        }
-
-        for (Agent agent : net.keySet())
-            agent.keepMeeting();
-
-        for (Meeting meeting : timeline.get(currentDay - 1))
-            meeting.conductMeeting();
     }
 
     private void killAgent(Agent agent){
@@ -81,18 +80,25 @@ public class World {
 
         for (LinkedList<Meeting> meetings : timeline.subList(currentDay, timeline.size())) {
             Set<Meeting> cancelled = new HashSet<>();
+
             for (Meeting meeting : meetings) {
                 if (meeting.contains(agent))
                     cancelled.add(meeting);
             }
-            for (Meeting meeting : cancelled) {
+
+            for (Meeting meeting : cancelled)
                 meetings.remove(meeting);
-            }
+        }
+    }
+
+    private void saveTheStrong(){
+        for (Agent agent : net.keySet()){
+            if (agent.ifInfected() && random.nextDouble() < recoverability)
+                agent.pullThrough();
         }
     }
 
     public void addMeeting(Meeting meeting, int when){
-        //TODO: check day numbering
         this.timeline.get(when).add(meeting);
     }
 
