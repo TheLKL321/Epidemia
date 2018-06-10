@@ -20,11 +20,13 @@ public abstract class Agent {
 
     // losuje znajomego z listy i umawia się z nim na spotkanie
     void arrangeMeeting(HashSet<Agent> friendList){
-        Random random = World.getInstance().getRandom();
-        int currentDay = World.getInstance().getCurrentDay(), duration = World.getInstance().getDuration();
+        if (friendList.size() > 0) {
+            Random random = World.getInstance().getRandom();
+            int currentDay = World.getInstance().getCurrentDay(), duration = World.getInstance().getDuration();
 
-        World.getInstance().addMeeting(new Meeting(this, (new ArrayList<>(friendList)).get(random.nextInt(friendList.size()))),
-                random.nextInt(duration - currentDay + 1) + currentDay - 1);
+            World.getInstance().addMeeting(new Meeting(this, (new ArrayList<>(friendList)).get(random.nextInt(friendList.size()))),
+                    random.nextInt(duration - currentDay + 1) + currentDay - 1);
+        }
     }
 
     // jeśli Agent nie jest odporny, to zostaje zarażony

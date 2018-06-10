@@ -7,5 +7,4 @@
     <entry key="prawdWyzdrowienia">0.001</entry>
     <entry key="prawdSpotkania">0.2</entry>
     <entry key="liczbaAgentów">1000</entry>
-    <entry key="plikZRaportem">./lol</entry>
 </properties>
