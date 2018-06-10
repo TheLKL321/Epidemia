@@ -133,6 +133,7 @@ public class Parser {
             throw new NoDefaultPropertiesException();
         }
 
+        checkCorrectness(defaultProperties);
         Properties config = new Properties(defaultProperties);
 
         try (FileInputStream stream = new FileInputStream(configPath)){
@@ -144,5 +145,116 @@ public class Parser {
         }
 
         return config;
+    }
+
+    // Sprawdza poprawność danych wejściowych
+    private static void checkCorrectness(Properties config) throws ConfigurationException{
+        try {
+            String seed = config.getProperty("seed");
+            if (seed != null)
+                Long.parseLong(seed);
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("seed:" + config.getProperty("seed"));
+        }
+
+        try {
+            String value = config.getProperty("liczbaAgentów");
+            if (value != null) {
+                int population = Integer.parseInt(value);
+                if (population > 1000000 || population < 1)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("liczbaAgentów:" + config.getProperty("liczbaAgentów"));
+        }
+
+        try {
+            String value = config.getProperty("liczbaDni");
+            if (value != null) {
+                int duration = Integer.parseInt(value);
+                if (duration > 1000 || duration < 1)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("liczbaDni:" + config.getProperty("liczbaDni"));
+        }
+
+        try {
+            String value = config.getProperty("śrZnajomych");
+            if (value != null) {
+                int averageFriends = Integer.parseInt(value);
+                if (averageFriends < 0)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("śrZnajomych:" + config.getProperty("śrZnajomych"));
+        }
+
+        try {
+            String value = config.getProperty("prawdTowarzyski");
+            if (value != null) {
+                double percentageSocial = Double.parseDouble(value);
+                if (percentageSocial > 1 || percentageSocial < 0)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("prawdTowarzyski:" + config.getProperty("prawdTowarzyski"));
+        }
+
+        try {
+            String value = config.getProperty("prawdSpotkania");
+            if (value != null) {
+                double meetingProb = Double.parseDouble(value);
+                if (meetingProb >= 1 || meetingProb < 0)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("prawdSpotkania:" + config.getProperty("prawdSpotkania"));
+        }
+
+        try {
+            String value = config.getProperty("prawdZarażenia");
+            if (value != null) {
+                double infectiousness = Double.parseDouble(value);
+                if (infectiousness > 1 || infectiousness < 0)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("prawdZarażenia:" + config.getProperty("prawdZarażenia"));
+        }
+
+        try {
+            String value = config.getProperty("prawdWyzdrowienia");
+            if (value != null) {
+                double recoverability = Double.parseDouble(value);
+                if (recoverability > 1 || recoverability < 0)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("prawdWyzdrowienia:" + config.getProperty("prawdWyzdrowienia"));
+        }
+
+        try {
+            String value = config.getProperty("śmiertelność");
+            if (value != null) {
+                double mortality = Double.parseDouble(value);
+                if (mortality > 1 || mortality < 0)
+                    throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidValueException("śmiertelność:" + config.getProperty("śmiertelność"));
+        }
+
+        String reportPath = config.getProperty("plikZRaportem");
+        if (reportPath != null) {
+            File file = new File(reportPath);
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                bw.write("[RESERVATION]");
+            } catch (IOException e) {
+                throw new InvalidValueException("plikZRaportem:" + reportPath);
+            }
+            //noinspection ResultOfMethodCallIgnored
+            file.delete();
+        }
     }
 }

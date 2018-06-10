@@ -3,8 +3,9 @@
 <properties>
     <comment>wartości dla symulacji</comment>
     <entry key="seed">53214112</entry>
-    <entry key="śrZnajomych">25</entry>
-    <entry key="prawdWyzdrowienia">0.01</entry>
+    <entry key="śrZnajomych">30</entry>
+    <entry key="prawdWyzdrowienia">0.001</entry>
     <entry key="prawdSpotkania">0.2</entry>
-    <entry key="śmiertelność">0.01</entry>
+    <entry key="liczbaAgentów">1000</entry>
+    <entry key="plikZRaportem">./lol</entry>
 </properties>
