@@ -34,7 +34,7 @@ public class Parser {
         try {
             seed = Long.parseLong(config.getProperty("seed"));
         } catch (NumberFormatException e){
-            throw new InvalidValueException("seed:" + config.getProperty("seed"));
+            throw new InvalidValueException("seed", config.getProperty("seed"));
         }
 
         try {
@@ -42,7 +42,7 @@ public class Parser {
             if (population > 1000000 || population < 1)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("liczbaAgentów:" + config.getProperty("liczbaAgentów"));
+            throw new InvalidValueException("liczbaAgentów", config.getProperty("liczbaAgentów"));
         }
 
         try {
@@ -50,7 +50,7 @@ public class Parser {
             if (duration > 1000 || duration < 1)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("liczbaDni:" + config.getProperty("liczbaDni"));
+            throw new InvalidValueException("liczbaDni", config.getProperty("liczbaDni"));
         }
 
         try {
@@ -58,7 +58,7 @@ public class Parser {
             if (averageFriends >= population || averageFriends < 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("śrZnajomych:" + config.getProperty("śrZnajomych"));
+            throw new InvalidValueException("śrZnajomych", config.getProperty("śrZnajomych"));
         }
 
         try {
@@ -66,7 +66,7 @@ public class Parser {
             if (percentageSocial > 1 || percentageSocial < 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdTowarzyski:" + config.getProperty("prawdTowarzyski"));
+            throw new InvalidValueException("prawdTowarzyski", config.getProperty("prawdTowarzyski"));
         }
 
         try {
@@ -74,7 +74,7 @@ public class Parser {
             if (meetingProb >= 1 || meetingProb < 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdSpotkania:" + config.getProperty("prawdSpotkania"));
+            throw new InvalidValueException("prawdSpotkania", config.getProperty("prawdSpotkania"));
         }
 
         try {
@@ -82,7 +82,7 @@ public class Parser {
             if (infectiousness > 1 || infectiousness < 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdZarażenia:" + config.getProperty("prawdZarażenia"));
+            throw new InvalidValueException("prawdZarażenia", config.getProperty("prawdZarażenia"));
         }
 
         try {
@@ -90,7 +90,7 @@ public class Parser {
             if (recoverability > 1 || recoverability < 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdWyzdrowienia:" + config.getProperty("prawdWyzdrowienia"));
+            throw new InvalidValueException("prawdWyzdrowienia", config.getProperty("prawdWyzdrowienia"));
         }
 
         try {
@@ -98,14 +98,14 @@ public class Parser {
             if (mortality > 1 || mortality < 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e){
-            throw new InvalidValueException("śmiertelność:" + config.getProperty("śmiertelność"));
+            throw new InvalidValueException("śmiertelność", config.getProperty("śmiertelność"));
         }
 
         reportPath = config.getProperty("plikZRaportem");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(reportPath))){
             bw.write("[RESERVATION]");
         } catch (IOException e) {
-            throw new InvalidValueException("plikZRaportem:" + reportPath);
+            throw new InvalidValueException("plikZRaportem", reportPath);
         }
 
         Random random = new Random(seed);
@@ -154,7 +154,7 @@ public class Parser {
             if (seed != null)
                 Long.parseLong(seed);
         } catch (NumberFormatException e){
-            throw new InvalidValueException("seed:" + config.getProperty("seed"));
+            throw new InvalidValueException("seed", config.getProperty("seed"));
         }
 
         try {
@@ -165,7 +165,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("liczbaAgentów:" + config.getProperty("liczbaAgentów"));
+            throw new InvalidValueException("liczbaAgentów", config.getProperty("liczbaAgentów"));
         }
 
         try {
@@ -176,7 +176,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("liczbaDni:" + config.getProperty("liczbaDni"));
+            throw new InvalidValueException("liczbaDni", config.getProperty("liczbaDni"));
         }
 
         try {
@@ -187,7 +187,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("śrZnajomych:" + config.getProperty("śrZnajomych"));
+            throw new InvalidValueException("śrZnajomych", config.getProperty("śrZnajomych"));
         }
 
         try {
@@ -198,7 +198,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdTowarzyski:" + config.getProperty("prawdTowarzyski"));
+            throw new InvalidValueException("prawdTowarzyski", config.getProperty("prawdTowarzyski"));
         }
 
         try {
@@ -209,7 +209,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdSpotkania:" + config.getProperty("prawdSpotkania"));
+            throw new InvalidValueException("prawdSpotkania", config.getProperty("prawdSpotkania"));
         }
 
         try {
@@ -220,7 +220,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdZarażenia:" + config.getProperty("prawdZarażenia"));
+            throw new InvalidValueException("prawdZarażenia", config.getProperty("prawdZarażenia"));
         }
 
         try {
@@ -231,7 +231,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("prawdWyzdrowienia:" + config.getProperty("prawdWyzdrowienia"));
+            throw new InvalidValueException("prawdWyzdrowienia", config.getProperty("prawdWyzdrowienia"));
         }
 
         try {
@@ -242,7 +242,7 @@ public class Parser {
                     throw new NumberFormatException();
             }
         } catch (NumberFormatException e){
-            throw new InvalidValueException("śmiertelność:" + config.getProperty("śmiertelność"));
+            throw new InvalidValueException("śmiertelność", config.getProperty("śmiertelność"));
         }
 
         String reportPath = config.getProperty("plikZRaportem");
@@ -251,7 +251,7 @@ public class Parser {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
                 bw.write("[RESERVATION]");
             } catch (IOException e) {
-                throw new InvalidValueException("plikZRaportem:" + reportPath);
+                throw new InvalidValueException("plikZRaportem", reportPath);
             }
             //noinspection ResultOfMethodCallIgnored
             file.delete();
